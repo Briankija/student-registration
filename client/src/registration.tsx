@@ -1,7 +1,7 @@
 function Registration() {
 	return (
 		<>
-			<body className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] font-[Poppins]">
+			<div className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] font-[Poppins]">
 				<div className="flex justify-center items-center min-h-screen">
 					<form
 						id="form"
@@ -14,7 +14,7 @@ function Registration() {
 
 						<div className="mb-4 input-control">
 							<label htmlFor="username" className="block mb-1 text-gray-700">
-								Username
+								Username:
 							</label>
 							<input
 								id="username"
@@ -27,7 +27,7 @@ function Registration() {
 
 						<div className="mb-4 input-control">
 							<label htmlFor="registration_no" className="block mb-1 text-gray-700">
-								Registration No
+								Registration No:
 							</label>
 							<input
 								id="registration_no"
@@ -40,7 +40,7 @@ function Registration() {
 
 						<div className="mb-4 input-control">
 							<label htmlFor="email" className="block mb-1 text-gray-700">
-								Email
+								Email:
 							</label>
 							<input
 								id="email"
@@ -53,7 +53,7 @@ function Registration() {
 
 						<div className="mb-4 input-control">
 							<label htmlFor="password" className="block mb-1 text-gray-700">
-								Password
+								Password:
 							</label>
 							<input
 								id="password"
@@ -66,7 +66,7 @@ function Registration() {
 
 						<div className="mb-4 input-control">
 							<label htmlFor="confirm_password" className="block mb-1 text-gray-700">
-								Confirm Password
+								Confirm Password:
 							</label>
 							<input
 								id="confirm_password"
@@ -85,7 +85,7 @@ function Registration() {
 						</button>
 					</form>
 				</div>
-			</body>
+			</div>
 		</>
 	);
 }
