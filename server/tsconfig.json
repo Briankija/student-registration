@@ -1,19 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2021",                   // Allows using async/await, etc.
-    "module": "ESNext",                   // For ES Modules
-    "moduleResolution": "node",           
-    "esModuleInterop": true,              // Allow `import express from 'express'`
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,                       
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "outDir": "dist",                     // Output dir when compiling
-    "rootDir": "src",                     // Your source code
-    "allowJs": false,                     
-    "noEmit": true,                       // Disable file emit in dev; use swc or build separately
-    "isolatedModules": true               // Required for ESM
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+    "strict": true,
+    "outDir": "dist"
+  }
 }

@@ -13,17 +13,23 @@ model Register {
   registrationNo  String @unique
   email           String @unique
   password        String
+
+  //automatically handle
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  updates     Update[] // 1 to many 
 }
 
-model Login {
-  id       Int @id @default(autoincrement())
-  username String
-  password String
-}
 
 model Update {
   id             Int @id @default(autoincrement())
-  username       String
-  registrationNo String
-  email          String
+  registerId     Int 
+  oldUsername    String
+  oldEmail       String
+  newUsername    String
+  newEmail       DateTime
+  updatedAt      DateTime  @default(now())
+
+  register       Register  @relation(fields: [registerId], references: [id])
 }
