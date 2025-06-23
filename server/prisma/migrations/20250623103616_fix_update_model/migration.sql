@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Update" ALTER COLUMN "newEmail" SET DATA TYPE TEXT;
