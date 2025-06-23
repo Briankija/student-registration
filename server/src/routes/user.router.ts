@@ -1,6 +1,6 @@
 import express from "express";
-import { registerUser } from "../handlers/user";
-import { updateUser } from "../handlers/update";
+import { registerUser } from "../handlers/user.handler";
+import { updateUser } from "../handlers/update.handler";
 import { RequestHandler } from "express";
 
 const router = express.Router();
