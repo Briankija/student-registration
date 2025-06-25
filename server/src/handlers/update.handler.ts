@@ -3,7 +3,7 @@ import prisma from "../db";
 
 export const updateUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
-	const { username, email } = req.body;
+	const { username,registrationNo, email } = req.body;
 
 	try {
 		const user = await prisma.register.findUnique({
@@ -22,8 +22,10 @@ export const updateUser = async (req: Request, res: Response) => {
 				data: {
 					registerId: user.id,
 					oldUsername: user.username,
+					oldRegistrationNo: user.registrationNo,
 					oldEmail: user.email,
 					newUsername: username,
+					newRegistrationNo: registrationNo,
 					newEmail: email,
 				},
 			}),
@@ -33,11 +35,12 @@ export const updateUser = async (req: Request, res: Response) => {
 				},
 				data: {
 					username,
+					registrationNo,
 					email,
 				},
 			}),
 		]),
-			res.status(200).json({ message: "User updated and history logged" });
+			res.status(200).json({ message: "Successfully Update" });
 	} catch (error) {
 		res.status(500).json({ error: "Failed to update", details: error });
 	}
