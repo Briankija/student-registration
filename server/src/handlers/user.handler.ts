@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import prisma from "../db";
 import bcrypt from "bcryptjs";
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
 	const { username, registrationNo, email, password } = req.body;
 	const hashedPassword = await bcrypt.hash(password, 10);
 
