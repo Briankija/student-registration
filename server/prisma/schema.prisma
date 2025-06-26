@@ -28,9 +28,9 @@ model Update {
   oldUsername       String
   oldRegistrationNo String 
   oldEmail          String
-  newUsername       String
-  newRegistrationNo String
-  newEmail          String
+  newUsername       String?
+  newRegistrationNo String?
+  newEmail          String?
   updatedAt         DateTime  @default(now())
 
   register       Register  @relation(fields: [registerId], references: [id])

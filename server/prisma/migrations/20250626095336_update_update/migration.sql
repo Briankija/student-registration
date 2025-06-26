@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Update" ALTER COLUMN "newUsername" DROP NOT NULL,
+ALTER COLUMN "newEmail" DROP NOT NULL,
+ALTER COLUMN "newRegistrationNo" DROP NOT NULL;
