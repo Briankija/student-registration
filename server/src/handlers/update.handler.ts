@@ -3,7 +3,7 @@ import prisma from "../db";
 
 export const updateUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
-	const { username,registrationNo, email } = req.body;
+	const { username, registrationNo, email } = req.body;
 
 	try {
 		const user = await prisma.register.findUnique({
@@ -22,10 +22,10 @@ export const updateUser = async (req: Request, res: Response) => {
 			registerId: user.id,
 			oldUsername: user.username,
 			oldRegistrationNo: user.registrationNo,
-			oldEmail: user.email
+			oldEmail: user.email,
 		};
 
-		if(username !== undefined){
+		if (username !== undefined) {
 			updatedFields.username = username;
 			updateLog.newUsername = username;
 		}
@@ -35,18 +35,18 @@ export const updateUser = async (req: Request, res: Response) => {
 			updateLog.newRegistrationNo = registrationNo;
 		}
 
-		if(email !== undefined) {
+		if (email !== undefined) {
 			updatedFields.email = email;
 			updateLog.oldEmail = email;
 		}
 
-		if(Object.keys(updatedFields).length === 0) {
-			return res.status(400).json({ error: "No fields provided for update"})
+		if (Object.keys(updatedFields).length === 0) {
+			return res.status(400).json({ error: "No fields provided for update" });
 		}
 
 		// save updatelog and update user in transaction
 		await prisma.$transaction([
-			prisma.update.create({ data: updateLog}),
+			prisma.update.create({ data: updateLog }),
 			prisma.register.update({
 				where: {
 					id: user.id,
