@@ -1,4 +1,14 @@
-function Registration() {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+import { createLazyFileRoute } from "@tanstack/react-router";
+
+
+export const Route = createLazyFileRoute("/")({
+	component: () => import('./Index')
+});
+
+
+function Index() {
 	return (
 		<>
 			<div className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] font-[Poppins]">
@@ -91,4 +101,4 @@ function Registration() {
 	);
 }
 
-export default Registration;
+export default Index;
