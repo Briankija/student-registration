@@ -1,23 +1,26 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
+// @ts-nocheck
 import { createLazyFileRoute } from "@tanstack/react-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const Route = createLazyFileRoute("/")({
 	component: Index,
 });
 
-
 function Index() {
 	const [formData, setFormData] = useState({
-		username: '',
-		registration_no: '',
-		email: '',
-		password: '',
-		confirm_password: '',
+		username: "",
+		registration_no: "",
+		email: "",
+		password: "",
+		confirm_password: "",
 	});
-	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
+	const [error, setError] = useState<{ [key: string]: string }>({});
+	const [success, setSuccess] = useState("");
+
+	useEffect(() => {
+		document.title = "Registration";
+	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,36 +28,44 @@ function Index() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setError('');
-		setSuccess('');
+		setError({});
+		setSuccess("");
 
 		try {
-			const res = await fetch('/api/register', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+			const res = await fetch("/api/register", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(formData),
 			});
 			const data = await res.json();
 
-			if(!res.ok) {
-				setError(data.error);
+			if (!res.ok) {
+				const fieldErrors: { [key: string]: string } = {};
+				data.errors.forEach((err: { field: string; message: string }) => {
+					fieldErrors[err.field] = err.message;
+				});
+				setError(fieldErrors);
 			} else {
 				setSuccess(data.message);
+				setFormData({
+					username: "",
+					registration_no: "",
+					email: "",
+					password: "",
+					confirm_password: "",
+				});
 			}
 		} catch {
-			setError('Something went Wrong!')
+			setError({ general: "Something went wrong!" });
 		}
-	}
-
+	};
 
 	return (
 		<>
 			<div className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] font-[Poppins]">
-				<title>Registration</title>
 				<div className="flex justify-center items-center min-h-screen">
 					<form
 						id="form"
-						action="/"
 						className="w-[350px] bg-white p-6 rounded shadow-md text-sm"
 						onSubmit={handleSubmit}
 					>
@@ -74,7 +85,9 @@ function Index() {
 								value={formData.username}
 								onChange={handleChange}
 							/>
-							<div className="error text-red-500 text-xs h-4 mt-1"></div>
+							{error.username && (
+								<p className="error text-red-500 text-xs h-4 mt-1">{error.username}</p>
+							)}
 						</div>
 
 						<div className="mb-4 input-control">
@@ -89,7 +102,11 @@ function Index() {
 								value={formData.registration_no}
 								onChange={handleChange}
 							/>
-							<div className="error text-red-500 text-xs h-4 mt-1"></div>
+							{error.registration_no && (
+								<p className="error text-red-500 text-xs h-4 mt-1">
+									{error.registration_no}
+								</p>
+							)}
 						</div>
 
 						<div className="mb-4 input-control">
@@ -104,7 +121,9 @@ function Index() {
 								value={formData.email}
 								onChange={handleChange}
 							/>
-							<div className="error text-red-500 text-xs h-4 mt-1"></div>
+							{error.email && (
+								<p className="error text-red-500 text-xs h-4 mt-1">{error.email}</p>
+							)}
 						</div>
 
 						<div className="mb-4 input-control">
@@ -119,7 +138,9 @@ function Index() {
 								value={formData.password}
 								onChange={handleChange}
 							/>
-							<div className="error text-red-500 text-xs h-4 mt-1"></div>
+							{error.password && (
+								<p className="error text-red-500 text-xs h-4 mt-1">{error.password}</p>
+							)}
 						</div>
 
 						<div className="mb-4 input-control">
@@ -134,7 +155,11 @@ function Index() {
 								value={formData.confirm_password}
 								onChange={handleChange}
 							/>
-							<div className="error text-red-500 text-xs h-4 mt-1"></div>
+							{error.confirm_password && (
+								<p className="error text-red-500 text-xs h-4 mt-1">
+									{error.confirm_password}
+								</p>
+							)}
 						</div>
 
 						<button
@@ -143,8 +168,9 @@ function Index() {
 						>
 							Sign Up
 						</button>
-						{error && <p className="text-red-500">{error}</p>}
-						{success && <p className="text-green-500">{success}</p>}
+
+						{error.general && <p className="text-red-500 mt-2">{error.general}</p>}
+						{success && <p className="text-green-500 mt-2">{success}</p>}
 					</form>
 				</div>
 			</div>

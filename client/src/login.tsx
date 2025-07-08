@@ -10,7 +10,7 @@ function Login() {
 						className="w-[350px] bg-white p-6 rounded shadow-md text-sm"
 					>
 						<h1 className="text-[#0f2027] text-2xl font-semibold text-center mb-4">
-						Login
+							Login
 						</h1>
 
 						<div className="mb-4 input-control">
@@ -22,11 +22,10 @@ function Login() {
 								name="username"
 								type="text"
 								className="w-full px-3 py-2 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-blue-400"
-                                placeholder="Username or Email"
+								placeholder="Username or Email"
 							/>
 							<div className="error text-red-500 text-xs  mt-1"></div>
 						</div>
-
 
 						<div className="mb-4 input-control">
 							<label htmlFor="password" className="block mb-1 text-gray-700">
@@ -40,7 +39,6 @@ function Login() {
 							/>
 							<div className="error text-red-500 text-xs mt-1"></div>
 						</div>
-
 
 						<button
 							type="submit"

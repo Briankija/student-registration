@@ -2,7 +2,7 @@ function Update() {
 	return (
 		<>
 			<div className="bg-gradient-to-r from-[#0f2027] via-[#203a43] to-[#2c5364] font-[Poppins]">
-                <title>Profile</title>
+				<title>Profile</title>
 				<div className="flex justify-center items-center min-h-screen">
 					<form
 						id="form"
