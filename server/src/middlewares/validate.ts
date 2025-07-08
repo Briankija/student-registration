@@ -8,8 +8,13 @@ export const validateRequest = (
 ): void => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		res.status(400).json({ errors: errors.array() });
+		res.status(400).json({
+			errors: errors.array({ onlyFirstError: true }).map((err) => ({
+				field: (err as any).param,
+				message: err.msg,
+			})),
+		});
 		return;
 	}
-	next();
+	return next();
 };
