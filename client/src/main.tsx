@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Registration from "./registration";
+import Index from "./routes/index.lazy.tsx";
 
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<Registration />
+		<Index />
 	</StrictMode>,
 );

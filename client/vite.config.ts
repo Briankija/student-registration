@@ -5,8 +5,13 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
-    TanStackRouterVite(), // ✅ correct
+    TanStackRouterVite(), // 
     react(),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5000', //api request to backend
+    }
+  }
 })
