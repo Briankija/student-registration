@@ -30,7 +30,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
 			expiresIn: "1h",
 		});
 
-		res.status(201).json({ message: "User registered successfully", user });
+		res.status(201).json({ message: "User registered successfully", user, token });
 	} catch (error) {
 		res.status(500).json({ error: "User registration failed", details: error });
 	}
@@ -52,7 +52,7 @@ export const signInUser = async (req: Request, res: Response) => {
 		}
 
 		const isPasswordValid = await bcrypt.compare(password, user.password);
-		if (isPasswordValid) {
+		if (!isPasswordValid) {
 			return res.status(401).json({ error: "Incorrect password" });
 		}
 

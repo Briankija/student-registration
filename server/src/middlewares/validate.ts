@@ -4,17 +4,19 @@ import { validationResult } from "express-validator";
 export const validateRequest = (
 	req: Request,
 	res: Response,
-	next: NextFunction,
+	next: NextFunction
 ): void => {
 	const errors = validationResult(req);
+
 	if (!errors.isEmpty()) {
 		res.status(400).json({
 			errors: errors.array({ onlyFirstError: true }).map((err) => ({
-				field: (err as any).param,
+				field: "param" in err ? err.param : "param",
 				message: err.msg,
 			})),
 		});
 		return;
 	}
-	return next();
+
+	next(); // continue only if no errors
 };
