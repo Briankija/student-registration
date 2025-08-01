@@ -10,10 +10,10 @@ export const Route = createLazyFileRoute("/")({
 function Index() {
 	const [formData, setFormData] = useState({
 		username: "",
-		registration_no: "",
+		registrationNo: "",
 		email: "",
 		password: "",
-		confirm_password: "",
+		confirmPassword: "",
 	});
 	const [error, setError] = useState<{ [key: string]: string }>({});
 	const [success, setSuccess] = useState("");
@@ -32,27 +32,30 @@ function Index() {
 		setSuccess("");
 
 		try {
-			const res = await fetch("/api/register", {
+			const res = await fetch("/api/user/register", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(formData),
 			});
 			const data = await res.json();
+			console.log("respnose data", data)
 
 			if (!res.ok) {
 				const fieldErrors: { [key: string]: string } = {};
-				data.errors.forEach((err: { field: string; message: string }) => {
-					fieldErrors[err.field] = err.message;
+				data.errors.forEach((err) => {
+					if(err.field){
+						fieldErrors[err.field] = err.message;
+					}
 				});
 				setError(fieldErrors);
 			} else {
 				setSuccess(data.message);
 				setFormData({
 					username: "",
-					registration_no: "",
+					registrationNo: "",
 					email: "",
 					password: "",
-					confirm_password: "",
+					confirmPassword: "",
 				});
 			}
 		} catch {
@@ -91,20 +94,20 @@ function Index() {
 						</div>
 
 						<div className="mb-4 input-control">
-							<label htmlFor="registration_no" className="block mb-1 text-gray-700">
+							<label htmlFor="registrationNo" className="block mb-1 text-gray-700">
 								Registration No:
 							</label>
 							<input
-								id="registration_no"
-								name="registration_no"
+								id="registrationNo"
+								name="registrationNo"
 								type="text"
 								className="w-full px-3 py-2 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-blue-400"
-								value={formData.registration_no}
+								value={formData.registrationNo}
 								onChange={handleChange}
 							/>
-							{error.registration_no && (
+							{error.registrationNo && (
 								<p className="error text-red-500 text-xs h-4 mt-1">
-									{error.registration_no}
+									{error.registrationNo}
 								</p>
 							)}
 						</div>
@@ -144,20 +147,20 @@ function Index() {
 						</div>
 
 						<div className="mb-4 input-control">
-							<label htmlFor="confirm_password" className="block mb-1 text-gray-700">
+							<label htmlFor="confirmPassword" className="block mb-1 text-gray-700">
 								Confirm Password:
 							</label>
 							<input
-								id="confirm_password"
-								name="confirm_password"
+								id="confirmPassword"
+								name="confirmPassword"
 								type="password"
 								className="w-full px-3 py-2 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-blue-400"
-								value={formData.confirm_password}
+								value={formData.confirmPassword}
 								onChange={handleChange}
 							/>
-							{error.confirm_password && (
+							{error.confirmPassword && (
 								<p className="error text-red-500 text-xs h-4 mt-1">
-									{error.confirm_password}
+									{error.confirmPassword}
 								</p>
 							)}
 						</div>
@@ -169,7 +172,7 @@ function Index() {
 							Sign Up
 						</button>
 
-						{error.general && <p className="text-red-500 mt-2">{error.general}</p>}
+						{error.param && <p className="text-red-500 mt-2">{error.param}</p>}
 						{success && <p className="text-green-500 mt-2">{success}</p>}
 					</form>
 				</div>
