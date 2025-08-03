@@ -38,12 +38,12 @@ function Index() {
 				body: JSON.stringify(formData),
 			});
 			const data = await res.json();
-			console.log("respnose data", data)
+			console.log("respnose data", data);
 
 			if (!res.ok) {
 				const fieldErrors: { [key: string]: string } = {};
 				data.errors.forEach((err) => {
-					if(err.field){
+					if (err.field) {
 						fieldErrors[err.field] = err.message;
 					}
 				});
