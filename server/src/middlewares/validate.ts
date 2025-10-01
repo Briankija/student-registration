@@ -1,22 +1,22 @@
 import { Request, Response, NextFunction } from "express";
-import { validationResult } from "express-validator";
+import { ZodSchema, ZodError, ZodIssue } from "zod";
 
-export const validateRequest = (
-	req: Request,
-	res: Response,
-	next: NextFunction,
-): void => {
-	const errors = validationResult(req);
+export const validateRequest = (schema: ZodSchema<any>) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const result = schema.safeParse(req.body);
 
-	if (!errors.isEmpty()) {
-		res.status(400).json({
-			errors: errors.array({ onlyFirstError: true }).map((err) => ({
-				field: "param" in err ? err.param : "param",
-				message: err.msg,
-			})),
-		});
-		return;
-	}
+    if (!result.success) {
+      // result.error is a ZodError, which contains .issues (not .errors)
+      const formattedErrors = result.error.issues.map((err: ZodIssue) => ({
+        field: err.path[0] as string,
+        message: err.message,
+      }));
 
-	next(); // continue only if no errors
+      res.status(400).json({ errors: formattedErrors });
+      return;
+    }
+
+    req.body = result.data;
+    next();
+  };
 };
